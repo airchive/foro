@@ -11,13 +11,8 @@
       </router-link>
     </h1>
     <p>
-<<<<<<< HEAD:vueschool-forum/src/pages/PageThreadShow.vue
-      By <a href="#" class="link-unstyled">Robin</a>, <AppDate :timestamp="thread.publishedAt"/>.
-      <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">3 replies by 3 contributors</span>
-=======
       By <a href="#" class="link-unstyled">{{user.name}}</a>, <AppDate :timestamp="thread.publishedAt"/>.
       <span style="float:right; margin-top: 2px;" class="hide-mobile text-faded text-small">{{repliesCount}} replies by {{contributorsCount}} contributors</span>
->>>>>>> f836bc9... small fixes:src/pages/PageThreadShow.vue
     </p>
     <PostList :posts="posts"/>
     <PostEditor
@@ -46,16 +41,20 @@
     },
 
     computed: {
+      ...mapGetters({
+        authUser: 'auth/authUser'
+      }),
+
       thread () {
-        return this.$store.state.threads[this.id]
+        return this.$store.state.threads.items[this.id]
       },
 
       repliesCount () {
-        return this.$store.getters.threadRepliesCount(this.thread['.key'])
+        return this.$store.getters['threads/threadRepliesCount'](this.thread['.key'])
       },
 
       user () {
-        return this.$store.state.users[this.thread.userId]
+        return this.$store.state.users.items[this.thread.userId]
       },
 
       contributorsCount () {
@@ -71,17 +70,30 @@
 
       posts () {
         const postIds = Object.values(this.thread.posts)
-        return Object.values(sourceData.posts)
+        return Object.values(this.$store.state.posts.items)
           .filter(post => postIds.includes(post['.key']))
       }
     },
     methods: {
-      addPost ({post}) {
-        const postId = post['.key']
-        this.$set(sourceData.posts, postId, post)
-        this.$set(this.thread.posts, postId, postId)
-        this.$set(sourceData.users[post.userId].posts, postId, postId)
-      }
+      ...mapActions('threads', ['fetchThread']),
+      ...mapActions('users', ['fetchUser']),
+      ...mapActions('posts', ['fetchPosts'])
+    },
+
+    created () {
+      // fetch thread
+      this.fetchThread({id: this.id})
+        .then(thread => {
+          // fetch user
+          this.fetchUser({id: thread.userId})
+          return this.fetchPosts({ids: Object.keys(thread.posts)})
+        })
+        .then(posts => {
+          return Promise.all(posts.map(post => {
+            this.fetchUser({id: post.userId})
+          }))
+        })
+        .then(() => { this.asyncDataStatus_fetched() })
     }
   }
 </script>

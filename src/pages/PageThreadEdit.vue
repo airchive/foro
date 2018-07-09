@@ -28,15 +28,25 @@
 
     computed: {
       thread () {
-        return this.$store.state.threads[this.id]
+        return this.$store.state.threads.items[this.id]
       },
 
       text () {
-        return this.$store.state.posts[this.thread.firstPostId].text
+        const post = this.$store.state.posts.items[this.thread.firstPostId]
+        return post ? post.text : null
+      },
+
+      hasUnsavedChanges () {
+        // this.saved is not required in this implementation because `this.thread.title` and `this.text` are reactive
+        // Thus `hasUnsavedChanges` will automatically become false when the thread is updated
+        return this.$refs.editor.form.title !== this.thread.title || this.$refs.editor.form.text !== this.text
       }
     },
 
     methods: {
+      ...mapActions('threads', ['updateThread', 'fetchThread']),
+      ...mapActions('posts', ['fetchPost']),
+
       save ({title, text}) {
         this.$store.dispatch('updateThread', {
           id: this.id,

@@ -41,10 +41,10 @@
 
     computed: {
       repliesCount () {
-        return Object.keys(this.thread.posts).length - 1
+        return this.$store.getters['threads/threadRepliesCount'](this.thread['.key'])
       },
       user () {
-        return sourceData.users[this.thread.userId]
+        return this.$store.state.users.items[this.thread.userId]
       }
     }
   }

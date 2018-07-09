@@ -51,7 +51,7 @@
 
       computed: {
         ...mapGetters({
-          user: 'authUser'
+          user: 'auth/authUser'
         }),
 
         userThreadsCount () {
@@ -63,12 +63,12 @@
         },
 
         userPosts () {
-          if (this.user.posts) {
-            return Object.values(this.$store.state.posts)
-              .filter(post => post.userId === this.user['.key'])
-          }
-          return []
+          return this.$store.getters['users/userPosts'](this.user['.key'])
         }
+      },
+      created () {
+        this.$store.dispatch('posts/fetchPosts', {ids: this.user.posts})
+          .then(() => this.asyncDataStatus_fetched())
       }
     }
 </script>
