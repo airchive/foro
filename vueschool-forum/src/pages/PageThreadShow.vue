@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div v-for="thread in threads" v-bind:key="thread['.key']" class="col-large push-top">
+    <div class="col-large push-top">
       <h1>{{ thread.title }}</h1>
 
       <div class="post-list">
@@ -31,17 +30,22 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 import sourceData from '@/data'
 
 export default {
-  name: 'HelloWorld',
+  props: {
+    id: {
+      required: true,
+      type: String
+    }
+  },
+
   data () {
     return {
-      threads: sourceData.threads,
+      thread: sourceData.threads[this.id],
       posts: sourceData.posts,
       users: sourceData.users
     }
