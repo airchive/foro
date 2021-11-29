@@ -1,6 +1,6 @@
 <template>
   <div class="col-full">
-    <h1>Wlecome to the Forum</h1>
+    <h1>Welcome to the Forum</h1>
     <ThreadList :threads="threads"/>
   </div>
 </template>
