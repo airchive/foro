@@ -7,8 +7,8 @@
 
 <script>
     import {mapActions} from 'vuex'
-    import CategoryListItem from '@/components/CategoryListItem'
     import asyncDataStatus from '@/mixins/asyncDataStatus'
+    import CategoryListItem from '@/components/CategoryListItem'
 
     export default {
       components: {
@@ -42,7 +42,3 @@
       }
     }
 </script>
-
-<style scoped>
-
-</style>
