@@ -12,10 +12,6 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style module>
   .headingLarge {
     font-size: 100px;
