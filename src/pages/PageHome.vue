@@ -30,7 +30,9 @@ export default {
 
   created () {
     this.fetchAllCategories()
-      .then(categories => Promise.all(categories.map(category => this.fetchForums({ids: Object.keys(category.forums)}))))
+      .then(categories => Promise.all(categories.map(
+        category => this.fetchForums({ids: Object.keys(category.forums)})
+      )))
       .then(() => {
         this.asyncDataStatus_fetched()
       })
