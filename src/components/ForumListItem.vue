@@ -15,31 +15,25 @@
       {{threadsCount === 1 ? 'thread' : 'threads'}}
     </div>
 
-    <div class="last-thread">
-      <!-- TODO: implement later -->
-    </div>
+    <div class="last-thread"></div>
   </div>
 </template>
 
 <script>
-    export default {
-      props: {
-        forum: {
-          required: true,
-          type: Object
-        }
-      },
-
-      computed: {
-        threadsCount () {
-          return this.forum.threads
-            ? Object.values(this.forum.threads).length
-            : 0
-        }
-      }
+export default {
+  props: {
+    forum: {
+      type: Object,
+      required: true,
     }
+  },
+
+  computed: {
+    threadsCount () {
+      return this.forum.threads
+        ? Object.values(this.forum.threads).length
+        : 0
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
