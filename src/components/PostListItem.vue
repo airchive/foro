@@ -16,8 +16,18 @@
         <div>
           {{post.text}}
         </div>
-        <a @click.prevent="editing = true" href="#" style="margin-left: auto;" class="link-unstyled" title="Make a change"><i class="fa fa-pencil"></i></a>
+
+        <a
+          @click.prevent="editing = true"
+          href="#"
+          class="link-unstyled"
+          title="Make a change"
+          style="margin-left: auto;"
+        >
+          <i class="fa fa-pencil"></i>
+        </a>
       </template>
+
       <div v-else>
         <PostEditor
           :post="post"
@@ -36,43 +46,41 @@
 </template>
 
 <script>
-    import {countObjectProperties} from '@/utils'
-    import PostEditor from './PostEditor'
+import PostEditor from './PostEditor'
+import {countObjectProperties} from '@/utils'
 
-    export default {
-      props: {
-        post: {
-          required: true,
-          type: Object
-        }
-      },
-
-      components: {
-        PostEditor
-      },
-
-      data () {
-        return {
-          editing: false
-        }
-      },
-
-      computed: {
-        user () {
-          return this.$store.state.users.items[this.post.userId]
-        },
-
-        userPostsCount () {
-          return this.$store.getters['users/userPostsCount'](this.post.userId)
-        },
-
-        userThreadsCount () {
-          return this.$store.getters['users/userThreadsCount'](this.post.userId)
-        }
-      }
+export default {
+  props: {
+    post: {
+      type: Object,
+      required: true,
     }
+  },
+
+  components: {
+    PostEditor,
+  },
+
+  data () {
+    return {
+      editing: false,
+    }
+  },
+
+  computed: {
+    user () {
+      return this.$store.state.users.items[this.post.userId]
+    },
+
+    userPostsCount () {
+      return this.$store.getters['users/userPostsCount'](this.post.userId)
+    },
+
+    userThreadsCount () {
+      return this.$store.getters['users/userThreadsCount'](
+        this.post.userId
+      )
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
