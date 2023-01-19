@@ -9,21 +9,18 @@
 </template>
 
 <script>
-    import ForumListItem from './ForumListItem'
-    export default {
-      components: {
-        ForumListItem
-      },
+import ForumListItem from './ForumListItem'
 
-      props: {
-        forums: {
-          required: true,
-          type: Array
-        }
-      }
+export default {
+  components: {
+    ForumListItem,
+  },
+
+  props: {
+    forums: {
+      type: Array,
+      required: true,
     }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
