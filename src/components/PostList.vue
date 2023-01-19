@@ -13,17 +13,14 @@ import PostListItem from './PostListItem.vue'
 
 export default {
   components: {
-    PostListItem
+    PostListItem,
   },
 
   props: {
     posts: {
+      type: Array,
       required: true,
-      type: Array
     }
   }
 }
 </script>
-
-<style scoped>
-</style>
