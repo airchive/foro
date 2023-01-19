@@ -1,11 +1,11 @@
 <template>
   <div class="thread-list">
     <h2 class="list-title">Threads</h2>
-    
+
     <ThreadListItem 
       v-for="thread in threads"
-      :key="thread['.key']"
       :thread="thread"
+      :key="thread['.key']"
     />
   </div>
 </template>
@@ -15,13 +15,13 @@ import ThreadListItem from './ThreadListItem'
 
 export default {
   components: {
-    ThreadListItem
+    ThreadListItem,
   },
 
   props: {
     threads: {
+      type: Array,
       required: true,
-      type: Array
     }
   }
 }
