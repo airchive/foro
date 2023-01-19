@@ -1,7 +1,7 @@
 {
-  "name": "vueschool-forum",
+  "name": "foro",
   "version": "1.0.0",
-  "description": "Awesome full blown mega madness forum",
+  "description": "Vue.js forum PoC.",
   "author": "Airscripts",
   "private": true,
   "scripts": {
