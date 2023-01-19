@@ -9,9 +9,9 @@
 </template>
 
 <script>
+  import NProgress from 'nprogress'
   import TheNavbar from '@/components/TheNavbar'
   import AppSpinner from '@/components/AppSpinner'
-  import NProgress from 'nprogress'
 
   export default {
     components: {
@@ -37,7 +37,9 @@
         speed: 200,
         showSpinner: false
       })
+
       NProgress.start()
+
       this.$router.beforeEach((to, from, next) => {
         this.showPage = false
         NProgress.start()
@@ -52,6 +54,6 @@
 @import "~nprogress/nprogress.css";
 
 #nprogress .bar {
-  background: #57AD8D;
+  background: #57ad8d;
 }
 </style>
