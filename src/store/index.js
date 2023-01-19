@@ -19,6 +19,7 @@ export default new Vuex.Store({
   actions: {
     createPost ({commit, state}, post) {
       const postId = 'greatPost' + Math.random()
+
       post['.key'] = postId
       post.userId = state.authId
       post.publishedAt = Math.floor(Date.now() / 1000)
@@ -26,6 +27,7 @@ export default new Vuex.Store({
       commit('setPost', {post, postId})
       commit('appendPostToThread', {threadId: post.threadId, postId})
       commit('appendPostToUser', {userId: post.userId, postId})
+
       return Promise.resolve(state.posts[postId])
     },
 
@@ -34,7 +36,6 @@ export default new Vuex.Store({
         const threadId = 'greatThread' + Math.random()
         const userId = state.authId
         const publishedAt = Math.floor(Date.now() / 1000)
-
         const thread = {'.key': threadId, title, forumId, publishedAt, userId}
 
         commit('setThread', {threadId, thread})
@@ -43,8 +44,12 @@ export default new Vuex.Store({
 
         dispatch('createPost', {text, threadId})
           .then(post => {
-            commit('setThread', {threadId, thread: {...thread, firstPostId: post['.key']}})
+            commit('setThread', {
+              threadId,
+              thread: {...thread, firstPostId: post['.key']}
+            })
           })
+
         resolve(state.threads[threadId])
       })
     },
@@ -53,6 +58,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         const thread = state.threads[id]
         const newThread = {...thread, title}
+
         commit('setThread', {thread: newThread, threadId: id})
 
         dispatch('updatePost', {id: thread.firstPostId, text})
@@ -65,17 +71,21 @@ export default new Vuex.Store({
     updatePost ({state, commit}, {id, text}) {
       return new Promise((resolve, reject) => {
         const post = state.posts[id]
+
         commit('setPost', {
           postId: id,
+
           post: {
             ...post,
             text,
+
             edited: {
               at: Math.floor(Date.now() / 1000),
               by: state.authId
             }
           }
         })
+
         resolve(post)
       })
     },
