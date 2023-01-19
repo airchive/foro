@@ -32,62 +32,62 @@
 </template>
 
 <script>
-    import { required, minLength } from 'vuelidate/lib/validators'
-    export default {
-      props: {
-        title: {
-          type: String,
-          default: ''
-        },
-        text: {
-          type: String,
-          default: ''
-        }
-      },
+import { required, minLength } from 'vuelidate/lib/validators'
 
-      data () {
-        return {
-          form: {
-            title: this.title,
-            text: this.text
-          }
-        }
-      },
+export default {
+  props: {
+    title: {
+      default: '',
+      type: String,
+    },
 
-      validations: {
-        form: {
-          title: {
-            required,
-            minLength: minLength(10)
-          },
-          text: {
-            required,
-            minLength: minLength(40)
-          }
-        }
-      },
+    text: {
+      default: '',
+      type: String,
+    }
+  },
 
-      computed: {
-        isUpdate () {
-          return !!this.title
-        }
-      },
-
-      methods: {
-        save () {
-          this.$v.form.$touch()
-          if (!this.$v.form.$invalid) {
-            this.$emit('save', {title: this.form.title, text: this.form.text})
-          }
-        },
-
-        cancel () {
-          this.$emit('cancel')
-        }
+  data () {
+    return {
+      form: {
+        text: this.text,
+        title: this.title,
       }
     }
+  },
+
+  validations: {
+    form: {
+      title: {
+        required,
+        minLength: minLength(10),
+      },
+
+      text: {
+        required,
+        minLength: minLength(40),
+      }
+    }
+  },
+
+  computed: {
+    isUpdate () {
+      return !!this.title
+    }
+  },
+
+  methods: {
+    save () {
+      this.$v.form.$touch()
+
+      if (!this.$v.form.$invalid) {
+        this.$emit('save', {title: this.form.title, text: this.form.text})
+      }
+    },
+
+    cancel () {
+      this.$emit('cancel')
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
