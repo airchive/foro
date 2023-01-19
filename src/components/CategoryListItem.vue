@@ -12,29 +12,26 @@
 </template>
 
 <script>
-    import ForumList from './ForumList'
-    import sourceData from '@/data'
-    export default {
-      components: {
-        ForumList
-      },
+import sourceData from '@/data'
+import ForumList from './ForumList'
 
-      props: {
-        category: {
-          required: true,
-          type: Object
-        }
-      },
+export default {
+  components: {
+    ForumList,
+  },
 
-      computed: {
-        categoryForums () {
-          return Object.values(this.$store.state.forums.items)
-            .filter(forum => forum.categoryId === this.category['.key'])
-        }
-      }
+  props: {
+    category: {
+      required: true,
+      type: Object
     }
+  },
+
+  computed: {
+    categoryForums () {
+      return Object.values(this.$store.state.forums.items)
+        .filter(forum => forum.categoryId === this.category['.key'])
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
